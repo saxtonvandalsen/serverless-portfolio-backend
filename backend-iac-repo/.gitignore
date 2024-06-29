@@ -1,0 +1,28 @@
+# Ignore Mac system files
+.DS_Store
+
+# Ignore Python bytecode
+__pycache__/
+*.py[cod]
+
+# Ignore Terraform state files
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate.*
+.terraform/
+
+# Ignore Lambda deployment package
+backend/lambda_function.zip
+
+# Ignore Python virtual environment
+venv/
+
+# Ignore logs and temp files
+*.log
+*.tmp
+
+# Ignore the node_modules directory (if using Node.js)
+node_modules/
+
+# Ignore local environment variable files
+.env
