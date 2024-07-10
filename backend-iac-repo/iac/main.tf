@@ -74,3 +74,65 @@ resource "aws_lambda_function_url" "url1" {
   function_name = aws_lambda_function.myfunc.function_name
   authorization_type = "NONE"
 }
+
+# DynamoDB table
+resource "aws_dynamodb_table" "my_table" {
+  name = "cloudresumechallenge-db"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key = "id"
+
+  attribute {
+    name = "id"    # Attribute definition
+    type = "S"     # S for String
+  }
+}
+
+# S3 bucket for front-end
+resource "aws_s3_bucket" "cloudresumechallenge-sv" {
+  bucket = "cloudresumechallenge-sv"
+}
+
+resource "aws_s3_object" "index_html" {
+  bucket = aws_s3_bucket.cloudresumechallenge-sv.bucket
+  key    = "index.html"
+  source = "/Users/SaxtonVanDalsen/Desktop/Programming/CloudResumeChallenge/src/index.html"
+  acl    = "public-read"
+}
+
+# CloudFront distribution
+resource "aws_cloudfront_distribution" "my_distribution" {
+
+  origin {
+    domain_name              = aws_s3_bucket.cloudresumechallenge-sv.bucket_regional_domain_name
+    origin_id                = "cloudresumechallenge-sv"
+  }
+
+  enabled             = true
+  is_ipv6_enabled     = true
+  default_root_object = "index.html"
+  default_cache_behavior {
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "S3-my-cloud-resume-bucket"
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+    viewer_protocol_policy = "redirect-to-https"
+  }
+  viewer_certificate {
+    cloudfront_default_certificate = true
+  }
+
+    restrictions {
+    geo_restriction {
+      restriction_type = "none"  # Change to appropriate restriction type
+    }
+  }
+}
+
+resource "aws_cloudfront_origin_access_identity" "my_oai" {
+  comment = "OAI for my-cloud-resume-bucket"
+}
