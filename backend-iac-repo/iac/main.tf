@@ -113,7 +113,7 @@ resource "aws_cloudfront_distribution" "my_distribution" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-my-cloud-resume-bucket"
+    target_origin_id = "cloudresumechallenge-sv"
     forwarded_values {
       query_string = false
       cookies {
