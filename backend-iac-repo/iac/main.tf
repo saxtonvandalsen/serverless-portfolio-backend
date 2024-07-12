@@ -25,6 +25,10 @@ resource "aws_iam_role" "iam_for_lambda" {
     ]
 }
 EOF
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 resource "aws_iam_policy" "iam_policy_for_cloudresumechallenge" {
@@ -57,6 +61,10 @@ resource "aws_iam_policy" "iam_policy_for_cloudresumechallenge" {
             ]
         }
     )
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
@@ -85,11 +93,20 @@ resource "aws_dynamodb_table" "my_table" {
     name = "id"    # Attribute definition
     type = "S"     # S for String
   }
+
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 # S3 bucket for front-end
 resource "aws_s3_bucket" "cloudresumechallenge-sv" {
   bucket = "cloudresumechallenge-sv"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_s3_object" "index_html" {
