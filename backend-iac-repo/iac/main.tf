@@ -101,8 +101,11 @@ resource "aws_dynamodb_table" "my_table" {
 }
 
 # S3 bucket for front-end
-data "aws_s3_bucket" "cloudresumechallenge-sv" {
+resource "aws_s3_bucket" "cloudresumechallenge-sv" {
   bucket = "cloudresumechallenge-sv"
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_s3_object" "index_html" {
