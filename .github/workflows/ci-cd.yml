@@ -28,7 +28,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-1
 
-    - name: Terraform Init/directory
+    - name: Terraform Init
       working-directory: backend-iac-repo/iac
       run: terraform init
 
