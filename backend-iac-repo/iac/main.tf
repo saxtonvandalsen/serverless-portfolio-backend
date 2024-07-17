@@ -33,7 +33,7 @@ EOF
 
 resource "aws_iam_policy" "iam_policy_for_cloudresumechallenge" {
 
-    name = "aws_iam_policy_for_terraform_cloud_resume_policy"
+    name = "aws_iam_policy_for_terraform_cloud_resume_policySV"
     path = "/"
     description = "AWS IAM Policy for managing cloud resume project role"
     policy = jsonencode(
