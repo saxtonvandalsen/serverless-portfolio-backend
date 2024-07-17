@@ -101,7 +101,7 @@ resource "aws_dynamodb_table" "my_table" {
 }
 
 # S3 bucket for front-end
-resource "aws_s3_bucket" "cloudresumechallenge-sv" {
+resource "aws_s3_bucket" "cloudresumes3bucket-sv" {
   bucket = "cloudresumechallenge-sv"
   lifecycle {
     prevent_destroy = true
@@ -109,7 +109,7 @@ resource "aws_s3_bucket" "cloudresumechallenge-sv" {
 }
 
 resource "aws_s3_object" "index_html" {
-  bucket = aws_s3_bucket.cloudresumechallenge-sv.bucket
+  bucket = aws_s3_bucket.cloudresumes3bucket-sv.bucket
   key    = "index.html"
   source = "/Users/SaxtonVanDalsen/Desktop/Programming/CloudResumeChallenge/src/index.html"
   acl    = "public-read"
