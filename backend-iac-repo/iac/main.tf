@@ -2,7 +2,7 @@ resource "aws_lambda_function" "myfunc" {
   filename = data.archive_file.zip.output_path
   source_code_hash = data.archive_file.zip.output_base64sha256
   function_name = "myfunc"
-  role = aws_iam_role.iam_for_lambda.arn
+  role = aws_iam_role.iam_for_cloudresumeSV_lambda.arn
   handler = "func.lambda_handler"
   runtime = "python3.8"
 }
@@ -68,7 +68,7 @@ resource "aws_iam_policy" "iam_policy_for_cloudresumechallenge" {
 }
 
 resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
-  role = aws_iam_role.iam_for_lambda.name
+  role = aws_iam_role.iam_for_cloudresumeSV_lambda.name
   policy_arn = aws_iam_policy.iam_policy_for_cloudresumechallenge.arn
 }
 
