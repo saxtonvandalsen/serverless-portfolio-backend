@@ -7,7 +7,7 @@ resource "aws_lambda_function" "myfunc" {
   runtime = "python3.8"
 }
 
-resource "aws_iam_role" "iam_for_lambda" {
+resource "aws_iam_role" "iam_for_cloudresumeSV_lambda" {
   name = "iam_for_lambda"
 
   assume_role_policy = <<EOF
