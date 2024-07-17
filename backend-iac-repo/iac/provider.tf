@@ -5,6 +5,13 @@ terraform {
             source = "hashicorp/aws"
         }
     }
+
+  backend "s3" {
+    bucket         = "cloudresumechallenge-sv"
+    key            = "terraform/state"
+    region         = "us-west-1"
+    dynamodb_table = "cloudresumechallenge-db"
+  }
 }
 provider "aws" {
   access_key = "AKIAXYKJSPAG7XWC64JY"

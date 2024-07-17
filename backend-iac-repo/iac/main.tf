@@ -8,7 +8,7 @@ resource "aws_lambda_function" "myfunc" {
 }
 
 resource "aws_iam_role" "iam_for_cloudresumeSV33_lambda" {
-  name = "iam_for_lambda"
+  name = "iam_for_lambda_SV33"
 
   assume_role_policy = <<EOF
 {
