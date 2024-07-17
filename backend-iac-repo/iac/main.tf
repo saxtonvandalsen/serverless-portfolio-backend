@@ -90,14 +90,14 @@ resource "aws_dynamodb_table" "my_table" {
   hash_key = "id"
 
   attribute {
-    name = "LockID"    # Attribute definition
+    name = "id"    # Attribute definition
     type = "S"     # S for String
   }
 
 
   lifecycle {
     prevent_destroy = true
-    ignore_changes = [ cloudresumechallenge-db ]
+    ignore_changes = [ name ]
   }
 }
 
@@ -106,7 +106,7 @@ resource "aws_s3_bucket" "cloudresumes3bucket-sv" {
   bucket = "cloudresumechallenge-sv"
   lifecycle {
     prevent_destroy = true
-    ignore_changes = [ cloudresumechallenge-sv ]
+    ignore_changes = [ bucket ]
   }
 }
 
