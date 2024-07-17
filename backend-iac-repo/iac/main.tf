@@ -2,12 +2,12 @@ resource "aws_lambda_function" "myfunc" {
   filename = data.archive_file.zip.output_path
   source_code_hash = data.archive_file.zip.output_base64sha256
   function_name = "myfunc"
-  role = aws_iam_role.iam_for_cloudresumeSV33_lambda.arn
+  role = aws_iam_role.iam_for_cloudresumeSV3_lambda.arn
   handler = "func.lambda_handler"
   runtime = "python3.8"
 }
 
-resource "aws_iam_role" "iam_for_cloudresumeSV33_lambda" {
+resource "aws_iam_role" "iam_for_cloudresumeSV3_lambda" {
   name = "iam_for_lambda_SV33"
 
   assume_role_policy = <<EOF
