@@ -20,25 +20,17 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.1.0
-        
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-1
 
-    - name: Terraform Init
-      working-directory: backend-iac-repo/iac
-      run: terraform init
+    - name: Make check_and_apply.sh executable
+      run: chmod +x backend-iac-repo/iac/check_and_apply.sh
 
-    - name: Terraform Validate
-      working-directory: backend-iac-repo/iac
-      run: terraform validate
-
-    - name: Terraform Plan
-      working-directory: backend-iac-repo/iac
-      run: terraform plan
-
-    - name: Terraform Apply
+    - name: Check and Apply Terraform
       if: github.ref == 'refs/heads/main'
-      working-directory: backend-iac-repo/iac
       run: backend-iac-repo/iac/check_and_apply.sh
