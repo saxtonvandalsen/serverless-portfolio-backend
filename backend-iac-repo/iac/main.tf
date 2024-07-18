@@ -8,7 +8,7 @@ resource "aws_lambda_function" "myfunc" {
 }
 
 resource "aws_iam_role" "iam_for_cloudresumeSV3_lambda" {
-  name = "iam_for_lambda_SV33"
+  name = "iam_for_lambda_SV3"
 
   assume_role_policy = <<EOF
 {
@@ -33,7 +33,7 @@ EOF
 
 resource "aws_iam_policy" "iam_policy_for_cloudresumechallenge" {
 
-    name = "aws_iam_policy_for_terraform_cloud_resume_policySV33"
+    name = "aws_iam_policy_for_terraform_cloud_resume_policySV3"
     path = "/"
     description = "AWS IAM Policy for managing cloud resume project role"
     policy = jsonencode(
