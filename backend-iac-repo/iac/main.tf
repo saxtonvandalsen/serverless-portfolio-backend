@@ -97,7 +97,11 @@ resource "aws_dynamodb_table" "my_table" {
 
   lifecycle {
     prevent_destroy = true
-    ignore_changes = [ name ]
+    ignore_changes = [ 
+        name,
+        hash_key,
+        attribute
+    ]
   }
 }
 
