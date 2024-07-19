@@ -152,6 +152,7 @@ resource "aws_s3_object" "index_html" {
   key    = "index.html"
   source = "/Users/SaxtonVanDalsen/Desktop/Programming/CloudResumeChallenge/src/index.html"
   acl    = "public-read"
+  content_type = "text/html"
 }
 
 # CloudFront distribution
