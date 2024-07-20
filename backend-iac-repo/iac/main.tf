@@ -1,4 +1,5 @@
 resource "aws_lambda_function" "myfunc" {
+  
   filename = data.archive_file.zip.output_path
   source_code_hash = data.archive_file.zip.output_base64sha256
   function_name = "myfunc"
@@ -8,6 +9,7 @@ resource "aws_lambda_function" "myfunc" {
 }
 
 resource "aws_iam_role" "iam_for_cloudresumeSV3_lambda" {
+  count = var.skip_iam_role == "true" ? 0 : 1
   name = "iam_for_lambda_SV3"
 
   assume_role_policy = <<EOF
@@ -33,6 +35,7 @@ EOF
 
 resource "aws_iam_policy" "iam_policy_for_cloudresumechallenge" {
 
+    count = var.skip_iam_policy == "true" ? 0 : 1
     name = "aws_iam_policy_for_terraform_cloud_resume_policySV3"
     path = "/"
     description = "AWS IAM Policy for managing cloud resume project role"
@@ -85,6 +88,7 @@ resource "aws_lambda_function_url" "url1" {
 
 # DynamoDB table
 resource "aws_dynamodb_table" "my_table" {
+  count = var.skip_dynamodb == "true" ? 0 : 1
   name = "cloudresumechallenge-db"
   billing_mode = "PAY_PER_REQUEST"
   hash_key = "id"
@@ -107,7 +111,9 @@ resource "aws_dynamodb_table" "my_table" {
 
 # S3 bucket for front-end
 resource "aws_s3_bucket" "cloudresumes3bucket-sv" {
+  count = var.skip_s3 == "true" ? 0 : 1
   bucket = "cloudresumechallenge-sv"
+  
   lifecycle {
     prevent_destroy = true
     ignore_changes = [ bucket ]
@@ -157,7 +163,7 @@ resource "aws_s3_object" "index_html" {
 
 # CloudFront distribution
 resource "aws_cloudfront_distribution" "my_distribution" {
-
+  count = var.skip_cloudfront == "true" ? 0 : 1
   origin {
     domain_name              = aws_s3_bucket.cloudresumes3bucket-sv.bucket_regional_domain_name
     origin_id                = "cloudresumechallenge-sv"
@@ -190,5 +196,6 @@ resource "aws_cloudfront_distribution" "my_distribution" {
 }
 
 resource "aws_cloudfront_origin_access_identity" "my_oai" {
+  count = var.skip_oai == "true" ? 0 : 1
   comment = "OAI for my-cloud-resume-bucket"
 }
