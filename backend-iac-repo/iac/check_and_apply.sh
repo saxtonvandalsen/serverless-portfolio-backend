@@ -60,15 +60,6 @@ else
   export SKIP_CLOUDFRONT=true
 fi
 
-# Check if CloudFront origin access identity exists
-OAI_ID="YOUR_OAI_ID"  # replace with your actual OAI ID
-if aws cloudfront get-cloud-front-origin-access-identity --id "${OAI_ID}" 2>&1 | grep -q 'NoSuchOriginAccessIdentity'; then
-  echo "CloudFront origin access identity ${OAI_ID} does not exist, creating..."
-else
-  echo "CloudFront origin access identity ${OAI_ID} already exists, skipping creation..."
-  export SKIP_OAI=true
-fi
-
 # Run terraform apply with conditional logic
 echo "Applying Terraform configurations..."
-terraform apply -auto-approve -var="skip_s3=${SKIP_S3}" -var="skip_dynamodb=${SKIP_DYNAMODB}" -var="skip_iam_role=${SKIP_IAM_ROLE}" -var="skip_iam_policy=${SKIP_IAM_POLICY}" -var="skip_lambda=${SKIP_LAMBDA}" -var="skip_cloudfront=${SKIP_CLOUDFRONT}" -var="skip_oai=${SKIP_OAI}"
+terraform apply -auto-approve -var="skip_s3=${SKIP_S3}" -var="skip_dynamodb=${SKIP_DYNAMODB}" -var="skip_iam_role=${SKIP_IAM_ROLE}" -var="skip_iam_policy=${SKIP_IAM_POLICY}" -var="skip_lambda=${SKIP_LAMBDA}" -var="skip_cloudfront=${SKIP_CLOUDFRONT}"

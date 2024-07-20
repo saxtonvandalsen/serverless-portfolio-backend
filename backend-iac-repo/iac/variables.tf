@@ -13,11 +13,6 @@ variable "skip_cloudfront" {
   default     = "false"
 }
 
-variable "skip_oai" {
-  description = "Skip CloudFront Origin Access Identity creation if set to true"
-  default     = "false"
-}
-
 variable "skip_iam_role" {
   description = "Skip IAM Role creation if set to true"
   default     = "false"
@@ -25,11 +20,6 @@ variable "skip_iam_role" {
 
 variable "skip_iam_policy" {
   description = "Skip IAM Policy creation if set to true"
-  default     = "false"
-}
-
-variable "skip_lambda" {
-  description = "Skip Lambda function creation if set to true"
   default     = "false"
 }
 

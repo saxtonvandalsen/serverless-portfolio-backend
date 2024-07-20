@@ -3,7 +3,7 @@ resource "aws_lambda_function" "myfunc" {
   filename = data.archive_file.zip.output_path
   source_code_hash = data.archive_file.zip.output_base64sha256
   function_name = "myfunc"
-  role = aws_iam_role.iam_for_cloudresumeSV3_lambda.arn
+  role = aws_iam_role.iam_for_cloudresumeSV3_lambda[0].arn
   handler = "func.lambda_handler"
   runtime = "python3.8"
 }
@@ -71,8 +71,8 @@ resource "aws_iam_policy" "iam_policy_for_cloudresumechallenge" {
 }
 
 resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
-  role = aws_iam_role.iam_for_cloudresumeSV3_lambda.name
-  policy_arn = aws_iam_policy.iam_policy_for_cloudresumechallenge.arn
+  role = aws_iam_role.iam_for_cloudresumeSV3_lambda[0].name
+  policy_arn = aws_iam_policy.iam_policy_for_cloudresumechallenge[0].arn
 }
 
 data "archive_file" "zip" {
@@ -122,7 +122,7 @@ resource "aws_s3_bucket" "cloudresumes3bucket-sv" {
 
 # S3 bucket policy
 resource "aws_s3_bucket_policy" "cloudresumechallenge_policy" {
-  bucket = aws_s3_bucket.cloudresumes3bucket-sv.id
+  bucket = aws_s3_bucket.cloudresumes3bucket-sv[0].id
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -154,7 +154,7 @@ resource "aws_s3_bucket_policy" "cloudresumechallenge_policy" {
 
 
 resource "aws_s3_object" "index_html" {
-  bucket = aws_s3_bucket.cloudresumes3bucket-sv.bucket
+  bucket = aws_s3_bucket.cloudresumes3bucket-sv[0].bucket
   key    = "index.html"
   source = "/Users/SaxtonVanDalsen/Desktop/Programming/CloudResumeChallenge/src/index.html"
   acl    = "public-read"
@@ -165,7 +165,7 @@ resource "aws_s3_object" "index_html" {
 resource "aws_cloudfront_distribution" "my_distribution" {
   count = var.skip_cloudfront == "true" ? 0 : 1
   origin {
-    domain_name              = aws_s3_bucket.cloudresumes3bucket-sv.bucket_regional_domain_name
+    domain_name              = aws_s3_bucket.cloudresumes3bucket-sv[0].bucket_regional_domain_name
     origin_id                = "cloudresumechallenge-sv"
   }
 
@@ -196,6 +196,5 @@ resource "aws_cloudfront_distribution" "my_distribution" {
 }
 
 resource "aws_cloudfront_origin_access_identity" "my_oai" {
-  count = var.skip_oai == "true" ? 0 : 1
   comment = "OAI for my-cloud-resume-bucket"
 }
