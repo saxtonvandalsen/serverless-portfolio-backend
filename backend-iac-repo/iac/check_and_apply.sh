@@ -4,7 +4,6 @@ set -e
 
 # Set the working directory to where your Terraform files are located
 cd backend-iac-repo/iac
-terraform init -input=false
 
 # Check if S3 bucket exists
 BUCKET_NAME="cloudresumechallenge-sv"
@@ -23,9 +22,9 @@ if aws dynamodb describe-table --table-name "${TABLE_NAME}" 2>&1 | grep -q 'Reso
 fi
 
 # Run Terraform Apply
-if [ "$S3_EXISTS" = false ] || [ "$DYNAMODB_EXISTS" = false ]; then
-  terraform apply -auto-approve
-else
-  echo "S3 bucket and DynamoDB table already exist, applying other changes..."
-  terraform apply -auto-approve
-fi
+# if [ "$S3_EXISTS" = false ] || [ "$DYNAMODB_EXISTS" = false ]; then
+#  terraform apply -auto-approve
+#else
+#  echo "S3 bucket and DynamoDB table already exist, applying other changes..."
+#  terraform apply -auto-approve
+#fi
