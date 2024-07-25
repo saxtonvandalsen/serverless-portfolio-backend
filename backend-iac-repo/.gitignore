@@ -8,6 +8,7 @@ __pycache__/
 # Ignore Terraform state files
 terraform.tfstate
 terraform.tfstate.backup
+terraform.tfvars
 *.tfstate.*
 .terraform/
 

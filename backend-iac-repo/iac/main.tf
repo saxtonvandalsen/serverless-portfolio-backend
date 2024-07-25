@@ -3,13 +3,12 @@ resource "aws_lambda_function" "myfunc" {
   filename = data.archive_file.zip.output_path
   source_code_hash = data.archive_file.zip.output_base64sha256
   function_name = "myfunc"
-  role = aws_iam_role.iam_for_cloudresumeSV3_lambda[0].arn
+  role = aws_iam_role.iam_for_cloudresumeSV3_lambda.arn
   handler = "func.lambda_handler"
   runtime = "python3.8"
 }
 
 resource "aws_iam_role" "iam_for_cloudresumeSV3_lambda" {
-  count = var.skip_iam_role == "true" ? 0 : 1
   name = "iam_for_lambda_SV3"
 
   assume_role_policy = <<EOF
@@ -35,7 +34,6 @@ EOF
 
 resource "aws_iam_policy" "iam_policy_for_cloudresumechallenge" {
 
-    count = var.skip_iam_policy == "true" ? 0 : 1
     name = "aws_iam_policy_for_terraform_cloud_resume_policySV3"
     path = "/"
     description = "AWS IAM Policy for managing cloud resume project role"
@@ -71,8 +69,8 @@ resource "aws_iam_policy" "iam_policy_for_cloudresumechallenge" {
 }
 
 resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
-  role = aws_iam_role.iam_for_cloudresumeSV3_lambda[0].name
-  policy_arn = aws_iam_policy.iam_policy_for_cloudresumechallenge[0].arn
+  role = aws_iam_role.iam_for_cloudresumeSV3_lambda.name
+  policy_arn = aws_iam_policy.iam_policy_for_cloudresumechallenge.arn
 }
 
 data "archive_file" "zip" {
@@ -88,7 +86,6 @@ resource "aws_lambda_function_url" "url1" {
 
 # DynamoDB table
 resource "aws_dynamodb_table" "my_table" {
-  count = var.skip_dynamodb == "true" ? 0 : 1
   name = "cloudresumechallenge-db"
   billing_mode = "PAY_PER_REQUEST"
   hash_key = "id"
@@ -111,7 +108,6 @@ resource "aws_dynamodb_table" "my_table" {
 
 # S3 bucket for front-end
 resource "aws_s3_bucket" "cloudresumes3bucket-sv" {
-  count = var.skip_s3 == "true" ? 0 : 1
   bucket = "cloudresumechallenge-sv"
   
   lifecycle {
@@ -122,7 +118,7 @@ resource "aws_s3_bucket" "cloudresumes3bucket-sv" {
 
 # S3 bucket policy
 resource "aws_s3_bucket_policy" "cloudresumechallenge_policy" {
-  bucket = aws_s3_bucket.cloudresumes3bucket-sv[0].id
+  bucket = aws_s3_bucket.cloudresumes3bucket-sv.id
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -154,7 +150,7 @@ resource "aws_s3_bucket_policy" "cloudresumechallenge_policy" {
 
 
 resource "aws_s3_object" "index_html" {
-  bucket = aws_s3_bucket.cloudresumes3bucket-sv[0].bucket
+  bucket = aws_s3_bucket.cloudresumes3bucket-sv.bucket
   key    = "index.html"
   source = "/Users/SaxtonVanDalsen/Desktop/Programming/CloudResumeChallenge/src/index.html"
   acl    = "public-read"
@@ -163,7 +159,6 @@ resource "aws_s3_object" "index_html" {
 
 # CloudFront distribution
 resource "aws_cloudfront_distribution" "my_distribution" {
-  count = var.skip_cloudfront == "true" ? 0 : 1
   origin {
     domain_name              = aws_s3_bucket.cloudresumes3bucket-sv[0].bucket_regional_domain_name
     origin_id                = "cloudresumechallenge-sv"
