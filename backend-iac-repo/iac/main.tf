@@ -160,7 +160,7 @@ resource "aws_s3_object" "index_html" {
 # CloudFront distribution
 resource "aws_cloudfront_distribution" "my_distribution" {
   origin {
-    domain_name              = aws_s3_bucket.cloudresumes3bucket-sv[0].bucket_regional_domain_name
+    domain_name              = aws_s3_bucket.cloudresumes3bucket-sv.bucket_regional_domain_name
     origin_id                = "cloudresumechallenge-sv"
   }
 
