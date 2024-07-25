@@ -4,6 +4,7 @@ set -e
 
 # Set the working directory to where your Terraform files are located
 cd backend-iac-repo/iac
+terraform init -input=false
 
 # Check if S3 bucket exists
 BUCKET_NAME="cloudresumechallenge-sv"
