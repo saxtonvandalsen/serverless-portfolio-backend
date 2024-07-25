@@ -11,7 +11,7 @@ terraform.tfstate.backup
 terraform.tfvars
 *.tfstate.*
 .terraform/
-provider.tf
+backend-iac-repo/iac/provider.tf
 
 # Ignore Lambda deployment package
 backend/lambda_function.zip
