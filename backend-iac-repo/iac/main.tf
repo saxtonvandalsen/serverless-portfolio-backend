@@ -116,38 +116,6 @@ resource "aws_s3_bucket" "cloudresumes3bucket-sv" {
   }
 }
 
-# S3 bucket policy
-resource "aws_s3_bucket_policy" "cloudresumechallenge_policy" {
-  bucket = aws_s3_bucket.cloudresumes3bucket-sv.id
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid       = "PublicReadGetObject",
-        Effect    = "Allow",
-        Principal = "*",
-        Action    = "s3:GetObject",
-        Resource  = "arn:aws:s3:::cloudresumechallenge-sv/*"
-      },
-      {
-        Sid       = "AllowCloudFrontServicePrincipal",
-        Effect    = "Allow",
-        Principal = {
-          Service = "cloudfront.amazonaws.com"
-        },
-        Action    = "s3:GetObject",
-        Resource  = "arn:aws:s3:::cloudresumechallenge-sv/*",
-        Condition = {
-          StringEquals = {
-            "AWS:SourceArn" = "arn:aws:cloudfront::533267118093:distribution/E2LYTO40JJHVJ"
-          }
-        }
-      }
-    ]
-  })
-}
-
 
 resource "aws_s3_object" "index_html" {
   bucket = aws_s3_bucket.cloudresumes3bucket-sv.bucket
