@@ -28,9 +28,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-1
 
-    - name: Make check_and_apply.sh executable
+    - name: Terraform check_and_apply.sh executable
       run: chmod +x backend-iac-repo/iac/check_and_apply.sh
 
-    - name: Check and Apply Terraform
+    - name: Check, Plan, and Apply Terraform
       if: github.ref == 'refs/heads/main'
       run: backend-iac-repo/iac/check_and_apply.sh
