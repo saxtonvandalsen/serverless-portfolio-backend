@@ -11,7 +11,6 @@ terraform.tfstate.backup
 terraform.tfvars
 *.tfstate.*
 .terraform/
-provider.tf
 
 # Ignore Lambda deployment package
 backend/lambda_function.zip
