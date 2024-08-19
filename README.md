@@ -4,7 +4,8 @@ Adhering closely to the challenge guidelines, I established a secondary reposito
 
 My thought process was to create a robust and scalable backend architecture, ensuring each component is properly configured and version-controlled. This repository includes the following AWS resources within my Terraform configuration:
 * **AWS S3 Bucket & Object**
-* **AWS Lambda Function URL & DynamoDB**
+* **AWS Lambda Function URL**
+* **AWS DynamoDB**
 * **AWS CloudFront**
 * **AWS IAM Policies**
 
