@@ -8,6 +8,6 @@ terraform {
 }
 
 provider "aws" {
-  profile = "github-actions-deployer"
+  profile = "default"
   region = "us-west-1"
 }
