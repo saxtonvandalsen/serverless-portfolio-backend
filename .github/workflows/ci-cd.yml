@@ -27,16 +27,16 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-1
-
-    - name: Change working directory to Terraform configuration
-      run: cd backend-iac-repo/iac
       
     - name: Initialize Terraform
+      working-directory: backend-iac-repo/iac
       run: terraform init
 
     - name: Terraform Plan
+      working-directory: backend-iac-repo/iac
       run: terraform plan -out=tfplan
 
     - name: Apply Terraform
+      working-directory: backend-iac-repo/iac
       if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve tfplan
