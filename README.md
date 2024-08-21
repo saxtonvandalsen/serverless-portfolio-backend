@@ -1,6 +1,6 @@
-# Cloud Resume Challenge - AWS (Backend)
+# AWS Serverless CI/CD Portfolio Website (Backend)
 
-Adhering closely to the challenge guidelines, I established a secondary repository specifically for the backend infrastructure, where the Terraform configuration manages all my AWS resources.
+I established a secondary repository specifically for the backend infrastructure, where the Terraform configuration manages all my AWS resources.
 
 My thought process was to create a robust and scalable backend architecture, ensuring each component is properly configured and version-controlled. This repository includes the following AWS resources within my Terraform configuration:
 * **AWS S3 Bucket & Object**
