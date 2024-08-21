@@ -27,10 +27,13 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-1
+      
+    - name: Initialize Terraform
+      run: terraform init
 
-    - name: Terraform check_and_apply.sh executable
-      run: chmod +x backend-iac-repo/iac/check_and_apply.sh
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
 
-    - name: Check, Plan, and Apply Terraform
+    - name: Apply Terraform
       if: github.ref == 'refs/heads/main'
-      run: backend-iac-repo/iac/check_and_apply.sh
+      run: terraform apply -auto-approve tfplan
